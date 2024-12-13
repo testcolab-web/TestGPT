@@ -1,26 +1,53 @@
+// DOM Elements
 const chatWindow = document.getElementById("chat-window");
 const chatForm = document.getElementById("chat-form");
 const chatInput = document.getElementById("chat-input");
 
 // Add message to chat window
-function addMessage(message, isBot = false) {
+function addMessage(content, isBot = false) {
     const messageDiv = document.createElement("div");
     messageDiv.classList.add("message", isBot ? "bot-message" : "user-message");
 
     if (isBot) {
-        // Typewriter effect
-        let i = 0;
-        const typewriter = setInterval(() => {
-            messageDiv.innerHTML += message.charAt(i);
-            i++;
-            if (i > message.length) clearInterval(typewriter);
+        const messageText = document.createElement("span");
+        messageText.classList.add("message-text");
+        messageDiv.appendChild(messageText);
+
+        // Typewriter effect for bot messages
+        let charIndex = 0;
+        const typeInterval = setInterval(() => {
+            messageText.textContent += content.charAt(charIndex);
+            charIndex++;
+
+            if (charIndex === content.length) {
+                clearInterval(typeInterval);
+            }
         }, 50);
     } else {
-        messageDiv.textContent = message;
+        messageDiv.textContent = content;
     }
 
     chatWindow.appendChild(messageDiv);
-    chatWindow.scrollTop = chatWindow.scrollHeight; // Scroll to bottom
+    chatWindow.scrollTop = chatWindow.scrollHeight; // Scroll to the bottom
+}
+
+// Show typing indicator
+function showTypingIndicator() {
+    const typingIndicator = document.createElement("div");
+    typingIndicator.classList.add("message", "bot-message", "typing-indicator");
+    typingIndicator.innerHTML = `
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    `;
+    chatWindow.appendChild(typingIndicator);
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+    return typingIndicator;
+}
+
+// Remove typing indicator
+function removeTypingIndicator(indicator) {
+    chatWindow.removeChild(indicator);
 }
 
 // Handle form submission
@@ -35,13 +62,10 @@ chatForm.addEventListener("submit", async (e) => {
     // Clear input
     chatInput.value = "";
 
-    // Add typing indicator
-    const typingIndicator = document.createElement("div");
-    typingIndicator.className = "typing";
-    typingIndicator.textContent = "Umm...";
-    chatWindow.appendChild(typingIndicator);
+    // Show typing indicator
+    const typingIndicator = showTypingIndicator();
 
-    // Fetch bot response
+    // Simulate fetching bot response
     try {
         const response = await fetch("https://backend-bt9s.onrender.com/chat", {
             method: "POST",
@@ -53,13 +77,17 @@ chatForm.addEventListener("submit", async (e) => {
         const data = await response.json();
 
         // Remove typing indicator
-        chatWindow.removeChild(typingIndicator);
+        removeTypingIndicator(typingIndicator);
 
         // Add bot message
         addMessage(data.reply, true);
     } catch (error) {
-        console.error("Error:", error);
-        chatWindow.removeChild(typingIndicator);
-        addMessage("Error: Unable to connect to the server.", true);
+        console.error("Error fetching bot response:", error);
+
+        // Remove typing indicator
+        removeTypingIndicator(typingIndicator);
+
+        // Show error message
+        addMessage("Sorry, I couldn't connect to the server. Please try again.", true);
     }
 });
