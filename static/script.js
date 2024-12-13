@@ -43,7 +43,7 @@ chatForm.addEventListener("submit", async (e) => {
 
     // Fetch bot response
     try {
-        const response = await fetch("https://<your-backend-url>/chat", {
+        const response = await fetch("https://backend-bt9s.onrender.com/chat", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ message: userMessage }),
