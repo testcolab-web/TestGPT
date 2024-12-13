@@ -38,7 +38,7 @@ chatForm.addEventListener("submit", async (e) => {
     // Add typing indicator
     const typingIndicator = document.createElement("div");
     typingIndicator.className = "typing";
-    typingIndicator.textContent = "TestGPT is thinking...";
+    typingIndicator.textContent = "Umm...";
     chatWindow.appendChild(typingIndicator);
 
     // Fetch bot response
