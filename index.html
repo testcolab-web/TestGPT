@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TestGPT Enhanced</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./static/styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header section -->
+        <header class="app-header">
+            <h1>TestGPT</h1>
+            <p>Your AI assistant, ready to help.</p>
+        </header>
+
+        <!-- Chat section -->
+        <div class="chat-container">
+            <div id="chat-window">
+                <!-- Placeholder greeting message -->
+                <div class="message bot-message fade-in">
+                    <span class="message-text">Hi! I’m TestGPT. How can I make your day special today?</span>
+                </div>
+            </div>
+
+            <!-- Chat input area -->
+            <form id="chat-form">
+                <input type="text" id="chat-input" placeholder="Type a message..." autocomplete="off" required />
+                <button type="submit" class="send-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="send-icon">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M22 2L11 13"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M22 2L15 22L11 13L2 9L22 2Z"/>
+                    </svg>
+                </button>
+            </form>
+        </div>
+
+        <!-- Footer section -->
+        <footer class="app-footer">
+            <p>TestGPT: Responses are generated and may not be perfect. Verify information before use.</p>
+        </footer>
+    </div>
+
+    <script src="./static/script.js" defer></script>
+</body>
+</html>
