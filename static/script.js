@@ -2,6 +2,8 @@
 const chatWindow = document.getElementById("chat-window");
 const chatForm = document.getElementById("chat-form");
 const chatInput = document.getElementById("chat-input");
+const themeSwitch = document.getElementById("theme-switch");
+const feedbackButton = document.querySelector(".feedback-button");
 
 // Add message to chat window
 function addMessage(content, isBot = false) {
@@ -89,5 +91,24 @@ chatForm.addEventListener("submit", async (e) => {
 
         // Show error message
         addMessage("Sorry, I couldn't connect to the server. Please try again.", true);
+    }
+});
+
+// Toggle Dark Mode
+function toggleDarkMode() {
+    document.body.classList.toggle("dark-mode");
+}
+
+// Attach event listener to theme switch
+themeSwitch.addEventListener("change", toggleDarkMode);
+
+// Feedback Button Click Handler
+feedbackButton.addEventListener("click", () => {
+    const feedback = prompt("Please provide your feedback:", "");
+    if (feedback) {
+        alert("Thank you for your feedback!");
+        console.log("User Feedback:", feedback); // Log feedback to console
+    } else {
+        alert("Feedback canceled.");
     }
 });
